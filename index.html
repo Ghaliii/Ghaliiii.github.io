@@ -2,110 +2,109 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Kenza 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Petit message pour toi</title>
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: Arial, sans-serif;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      padding: 25px;
-      border-radius: 25px;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffe3e3, #fff1e3, #e3fff3);
       text-align: center;
-      width: 90%;
-      max-width: 350px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-      position: relative;
-    }
-
-    .photo {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid white;
-    }
-
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
     h1 {
-      color: white;
-      font-size: 1.6em;
-      margin-bottom: 25px;
+      color: #ff6b81;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
     }
 
-    .buttons {
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 4px solid #ff6b81;
+      object-fit: cover;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .btn-container {
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      position: relative;
+      gap: 20px;
+      margin-top: 20px;
     }
 
     button {
-      padding: 12px 22px;
-      font-size: 1em;
+      padding: 15px 25px;
+      font-size: 1.2rem;
       border: none;
       border-radius: 25px;
-      cursor: pointer;
-    }
-
-    #yes {
-      background: #ff4d6d;
+      background-color: #ff6b81;
       color: white;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+      position: relative;
     }
 
-    #no {
-      background: white;
-      color: #ff4d6d;
-      position: relative;
+    button:hover {
+      transform: scale(1.1);
+      background-color: #ff4c61;
+    }
+
+    .message {
+      margin-top: 30px;
+      font-size: 1.5rem;
+      color: #ff6b81;
+      opacity: 0;
+      transition: opacity 0.5s;
     }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <div class="photo">
-      <img src="kenza.jpg" alt="Nous deux ❤️">
-    </div>
 
-    <h1>Kenza,<br>tu veux être ma Valentine ? 💘</h1>
+  <h1>Hey 😊</h1>
+  <img src="kenza.jpg" alt="Kenza">
+  <h1>Veux-tu être l'amour de ma vie ?</h1>
 
-    <div class="buttons">
-      <button id="yes">Oui 💖</button>
-      <button id="no">Non 😢</button>
-    </div>
+  <div class="btn-container">
+    <button id="yesBtn">Oui ! 💖</button>
+    <button id="noBtn">Non 😢</button>
   </div>
 
+  <div class="message" id="message"></div>
+
   <script>
-    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const message = document.getElementById('message');
 
-    noBtn.addEventListener("touchstart", moveButton);
-    noBtn.addEventListener("mouseover", moveButton);
+    // Si elle clique sur Oui
+    yesBtn.addEventListener('click', () => {
+      document.querySelector('.btn-container').style.display = 'none';
+      message.textContent = "Youpi ! 😍 Je suis tellement heureux !";
+      message.style.opacity = 1;
+    });
 
-    function moveButton() {
-      const x = Math.random() * 100 - 50;
-      const y = Math.random() * 60 - 30;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-
-    document.getElementById("yes").addEventListener("click", () => {
-      alert("YES 😍 J’ai trop hâte d’être ta Valentine ❤️");
+    // Si elle clique sur Non → message drôle
+    noBtn.addEventListener('click', () => {
+      noBtn.textContent = "😂 Haha je savais que tu dirais ça !";
+      noBtn.style.backgroundColor = "#ffa500";
+      message.textContent = "Ne t'inquiète pas, je suis patient 😎";
+      message.style.opacity = 1;
     });
   </script>
+
 </body>
 </html>
+

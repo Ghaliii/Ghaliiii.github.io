@@ -1,137 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz mignon 💖</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      /* Fond avec image */
-      background: url('kenza.jpg') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mur de souvenirs mignons 💖</title>
+<style>
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #ffe3e3, #fff1e3, #e3fff3);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+  }
 
-    /* Overlay pour adoucir l'image */
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.5); /* filtre pastel */
-      backdrop-filter: blur(2px);
-      z-index: 0;
-    }
+  .photo-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 4px solid #ff6b81;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
 
-    h1, .message, .btn-container {
-      position: relative;
-      z-index: 1;
-    }
+  .photo-container:hover {
+    transform: scale(1.1) rotate(-2deg);
+  }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 5px #ff6b81;
-    }
+  .photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    .btn-container {
-      display: flex;
-      gap: 20px;
-      margin-top: 20px;
-    }
+  .emoji {
+    position: absolute;
+    font-size: 2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
 
-    button {
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 25px;
-      background-color: #ff6b81;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.2s, background-color 0.3s;
-      position: relative;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    }
-
-    button:hover {
-      transform: scale(1.1);
-      background-color: #ff4c61;
-    }
-
-    .message {
-      margin-top: 30px;
-      font-size: 1.5rem;
-      color: #ff6b81;
-      min-height: 30px;
-      text-shadow: 1px 1px 3px #fff;
-    }
-  </style>
+  .message {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #ff6b81;
+    margin-top: 30px;
+    min-height: 30px;
+  }
+</style>
 </head>
 <body>
 
-  <h1 id="question">Tu m’aimes ? 💖</h1>
+<div class="photo-container"><img src="kenza1.jpg" alt="kenza1"></div>
+<div class="photo-container"><img src="kenza2.jpg" alt="kenza2"></div>
+<div class="photo-container"><img src="kenza3.jpg" alt="kenza3"></div>
+<div class="photo-container"><img src="kenza4.jpg" alt="kenza4"></div>
+<div class="photo-container"><img src="kenza5.jpg" alt="kenza5"></div>
+<div class="photo-container"><img src="kenza6.jpg" alt="kenza6"></div>
+<div class="photo-container"><img src="kenza7.jpg" alt="kenza7"></div>
 
-  <div class="btn-container">
-    <button id="yesBtn">Oui 😍</button>
-    <button id="noBtn">Non 😢</button>
-  </div>
+<div class="message" id="message"></div>
 
-  <div class="message" id="message"></div>
+<script>
+  const containers = document.querySelectorAll('.photo-container');
+  const messageEl = document.getElementById('message');
 
-  <script>
-    const questions = [
-      "Tu m’aimes ? 💖",
-      "Tu sais que t’es la plus belle ? 😘",
-      "Tu sais que je serai toujours là ? 🫂",
-      "Tu sais que je t’aime plus que tout ? 💝",
-      "Tu veux qu’on rigole ensemble pour toujours ? 😄",
-      "Tu es ma personne préférée ? 🥰"
-    ];
+  const emojis = ["😍","🥰","😂","😜","🤩","😎","💖"];
+  const messages = [
+    "Trop belle 😍",
+    "Je fonds 🥰",
+    "Haha trop mimi😂",
+    "Trop fraiche 😜",
+    "Tu es géniale 🤩",
+    "T'es lpb😎",
+    "l'amour de ma vie 💖"
+  ];
 
-    const funnyResponses = [
-      "😂 Haha je savais que tu dirais ça !",
-      "😜 Impossible de dire Non à moi !",
-      "🤪 Même pas en rêve !",
-      "😎 Non ? Tu bluffes j’espère !",
-      "🤣 Haha t’as essayé, mais Non !",
-      "😏 Je prends ça pour un Oui déguisé !"
-    ];
+  containers.forEach((container, index) => {
+    container.addEventListener('click', () => {
+      // Ajouter emoji
+      let emoji = document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.textContent = emojis[index % emojis.length];
+      container.appendChild(emoji);
 
-    let currentQuestion = 0;
+      // Faire disparaître après 1,5s
+      setTimeout(() => emoji.remove(), 1500);
 
-    const questionEl = document.getElementById('question');
-    const messageEl = document.getElementById('message');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-
-    yesBtn.addEventListener('click', () => {
-      messageEl.textContent = "";
-      currentQuestion++;
-      if(currentQuestion < questions.length){
-        questionEl.textContent = questions[currentQuestion];
-      } else {
-        questionEl.textContent = "🎉 Tu as répondu Oui à tout ! Je t’adore 😍";
-        yesBtn.style.display = 'none';
-        noBtn.style.display = 'none';
-      }
+      // Afficher message
+      messageEl.textContent = messages[index % messages.length];
     });
-
-    noBtn.addEventListener('click', () => {
-      const index = Math.floor(Math.random() * funnyResponses.length);
-      messageEl.textContent = funnyResponses[index];
-    });
-  </script>
+  });
+</script>
 
 </body>
 </html>
-

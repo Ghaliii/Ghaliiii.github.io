@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petit message pour toi</title>
+  <title>Quiz mignon 💖</title>
   <style>
     body {
       margin: 0;
@@ -14,29 +14,34 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: linear-gradient(135deg, #ffe3e3, #fff1e3, #e3fff3);
       text-align: center;
+      /* Fond avec image */
+      background: url('kenza.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: #fff;
+    }
+
+    /* Overlay pour adoucir l'image */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.5); /* filtre pastel */
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    h1, .message, .btn-container {
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
-      color: #ff6b81;
-      font-size: 2.2rem;
+      font-size: 2rem;
       margin-bottom: 20px;
-    }
-
-    img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 4px solid #ff6b81;
-      object-fit: cover;
-      margin-bottom: 20px;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      text-shadow: 1px 1px 5px #ff6b81;
     }
 
     .btn-container {
@@ -46,7 +51,7 @@
     }
 
     button {
-      padding: 15px 25px;
+      padding: 15px 30px;
       font-size: 1.2rem;
       border: none;
       border-radius: 25px;
@@ -55,6 +60,7 @@
       cursor: pointer;
       transition: transform 0.2s, background-color 0.3s;
       position: relative;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
     }
 
     button:hover {
@@ -66,42 +72,63 @@
       margin-top: 30px;
       font-size: 1.5rem;
       color: #ff6b81;
-      opacity: 0;
-      transition: opacity 0.5s;
+      min-height: 30px;
+      text-shadow: 1px 1px 3px #fff;
     }
   </style>
 </head>
 <body>
 
-  <h1>Hey 😊</h1>
-  <img src="kenza.jpg" alt="Kenza">
-  <h1>Veux-tu être l'amour de ma vie ?</h1>
+  <h1 id="question">Tu m’aimes ? 💖</h1>
 
   <div class="btn-container">
-    <button id="yesBtn">Oui ! 💖</button>
+    <button id="yesBtn">Oui 😍</button>
     <button id="noBtn">Non 😢</button>
   </div>
 
   <div class="message" id="message"></div>
 
   <script>
+    const questions = [
+      "Tu m’aimes ? 💖",
+      "Tu sais que t’es la plus belle ? 😘",
+      "Tu sais que je serai toujours là ? 🫂",
+      "Tu sais que je t’aime plus que tout ? 💝",
+      "Tu veux qu’on rigole ensemble pour toujours ? 😄",
+      "Tu es ma personne préférée ? 🥰"
+    ];
+
+    const funnyResponses = [
+      "😂 Haha je savais que tu dirais ça !",
+      "😜 Impossible de dire Non à moi !",
+      "🤪 Même pas en rêve !",
+      "😎 Non ? Tu bluffes j’espère !",
+      "🤣 Haha t’as essayé, mais Non !",
+      "😏 Je prends ça pour un Oui déguisé !"
+    ];
+
+    let currentQuestion = 0;
+
+    const questionEl = document.getElementById('question');
+    const messageEl = document.getElementById('message');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
-    const message = document.getElementById('message');
 
-    // Si elle clique sur Oui
     yesBtn.addEventListener('click', () => {
-      document.querySelector('.btn-container').style.display = 'none';
-      message.textContent = "Youpi ! 😍 Je suis tellement heureux !";
-      message.style.opacity = 1;
+      messageEl.textContent = "";
+      currentQuestion++;
+      if(currentQuestion < questions.length){
+        questionEl.textContent = questions[currentQuestion];
+      } else {
+        questionEl.textContent = "🎉 Tu as répondu Oui à tout ! Je t’adore 😍";
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+      }
     });
 
-    // Si elle clique sur Non → message drôle
     noBtn.addEventListener('click', () => {
-      noBtn.textContent = "😂 Haha je savais que tu dirais ça !";
-      noBtn.style.backgroundColor = "#ffa500";
-      message.textContent = " NON HORS DE QUESTION, TU ES A MOI";
-      message.style.opacity = 1;
+      const index = Math.floor(Math.random() * funnyResponses.length);
+      messageEl.textContent = funnyResponses[index];
     });
   </script>
 

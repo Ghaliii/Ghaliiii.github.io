@@ -1,106 +1,110 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mur de souvenirs mignons 💖</title>
-<style>
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: linear-gradient(135deg, #ffe3e3, #fff1e3, #e3fff3);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    text-align: center;
-  }
+  <meta charset="UTF-8">
+  <title>Pour toi 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  .photo-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 4px solid #ff6b81;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
 
-  .photo-container:hover {
-    transform: scale(1.1) rotate(-2deg);
-  }
+    /* Image principale */
+    #slideshow {
+      width: 90vw;
+      max-width: 450px;
+      height: 90vw;
+      max-height: 450px;
+      object-fit: cover;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
+      z-index: 2;
+      animation: fade 1s ease-in-out;
+    }
 
-  .photo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-  .emoji {
-    position: absolute;
-    font-size: 2rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
+    /* Coeurs */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 5s linear forwards;
+      opacity: 0.8;
+      z-index: 1;
+    }
 
-  .message {
-    width: 100%;
-    text-align: center;
-    font-size: 1.3rem;
-    color: #ff6b81;
-    margin-top: 30px;
-    min-height: 30px;
-  }
-</style>
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="photo-container"><img src="kenza1.jpg" alt="kenza1"></div>
-<div class="photo-container"><img src="kenza2.jpg" alt="kenza2"></div>
-<div class="photo-container"><img src="kenza3.jpg" alt="kenza3"></div>
-<div class="photo-container"><img src="kenza4.jpg" alt="kenza4"></div>
-<div class="photo-container"><img src="kenza5.jpg" alt="kenza5"></div>
-<div class="photo-container"><img src="kenza6.jpg" alt="kenza6"></div>
-<div class="photo-container"><img src="kenza7.jpg" alt="kenza7"></div>
+  <img id="slideshow" src="kenza1.jpg" alt="photo">
 
-<div class="message" id="message"></div>
+  <script>
+    const images = [
+      "kenza1.jpg",
+      "kenza2.jpg",
+      "kenza3.jpg",
+      "kenza4.jpg",
+      "kenza5.jpg",
+      "kenza6.jpg",
+      "kenza7.jpg",
+      "poeme.jpg" // dernière image
+    ];
 
-<script>
-  const containers = document.querySelectorAll('.photo-container');
-  const messageEl = document.getElementById('message');
+    let index = 0;
+    const img = document.getElementById("slideshow");
 
-  const emojis = ["😍","🥰","😂","😜","🤩","😎","💖"];
-  const messages = [
-    "Trop belle 😍",
-    "Je fonds 🥰",
-    "Haha trop mimi😂",
-    "Trop fraiche 😜",
-    "Tu es géniale 🤩",
-    "T'es lpb😎",
-    "l'amour de ma vie 💖"
-  ];
+    // Changement d’image toutes les 3 secondes
+    setInterval(() => {
+      index++;
+      if (index < images.length) {
+        img.src = images[index];
+        img.style.animation = "none";
+        img.offsetHeight; // reset animation
+        img.style.animation = "fade 1s ease-in-out";
+      }
+    }, 3000);
 
-  containers.forEach((container, index) => {
-    container.addEventListener('click', () => {
-      // Ajouter emoji
-      let emoji = document.createElement('div');
-      emoji.classList.add('emoji');
-      emoji.textContent = emojis[index % emojis.length];
-      container.appendChild(emoji);
+    // Générateur de coeurs
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (15 + Math.random() * 25) + "px";
+      document.body.appendChild(heart);
 
-      // Faire disparaître après 1,5s
-      setTimeout(() => emoji.remove(), 1500);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }, 400);
+  </script>
 
-      // Afficher message
-      messageEl.textContent = messages[index % messages.length];
-    });
-  });
-</script>
+</body>
+</html>
+
 
 </body>
 </html>

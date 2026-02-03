@@ -1,110 +1,122 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Pour toi 💖</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini-jeu mignon 💖</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: #ffe3e3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-    }
+  #game-img {
+    width: 80vw;
+    max-width: 400px;
+    height: 80vw;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255,105,180,0.5);
+    cursor: pointer;
+    position: relative;
+  }
 
-    /* Image principale */
-    #slideshow {
-      width: 90vw;
-      max-width: 450px;
-      height: 90vw;
-      max-height: 450px;
-      object-fit: cover;
-      border-radius: 25px;
-      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
-      z-index: 2;
-      animation: fade 1s ease-in-out;
-    }
+  .message {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    color: #ff6b81;
+    min-height: 30px;
+    text-shadow: 1px 1px 3px #fff;
+  }
 
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+  .heart {
+    position: absolute;
+    font-size: 25px;
+    animation: floatUp 1.5s linear forwards;
+    opacity: 0.9;
+    pointer-events: none;
+  }
 
-    /* Coeurs */
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp 5s linear forwards;
-      opacity: 0.8;
-      z-index: 1;
-    }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+  }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh) scale(1.5);
-        opacity: 0;
-      }
-    }
-  </style>
+</style>
 </head>
 <body>
 
-  <img id="slideshow" src="kenza1.jpg" alt="photo">
+<img id="game-img" src="kenza1.jpg" alt="photo">
+<div class="message" id="message"></div>
 
-  <script>
-    const images = [
-      "kenza1.jpg",
-      "kenza2.jpg",
-      "kenza3.jpg",
-      "kenza4.jpg",
-      "kenza5.jpg",
-      "kenza6.jpg",
-      "kenza7.jpg",
-      "poeme.jpg" // dernière image
-    ];
+<script>
+  const images = [
+    "kenza1.jpg",
+    "kenza2.jpg",
+    "kenza3.jpg",
+    "kenza4.jpg",
+    "kenza5.jpg",
+    "kenza6.jpg",
+    "kenza7.jpg",
+    "poeme.jpg" // dernière image
+  ];
 
-    let index = 0;
-    const img = document.getElementById("slideshow");
+  const messages = [
+    "Trop mignon 😍",
+    "Je fonds 🥰",
+    "Haha trop drôle 😂",
+    "Trop coquine 😜",
+    "Tu es géniale 🤩",
+    "Trop stylée 😎",
+    "Mon rayon de soleil 💖",
+    "💌 Mon poème pour toi 💌"
+  ];
 
-    // Changement d’image toutes les 3 secondes
-    setInterval(() => {
+  let index = 0;
+
+  const imgEl = document.getElementById('game-img');
+  const messageEl = document.getElementById('message');
+
+  function createHeart(x, y) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = "💖";
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1500);
+  }
+
+  imgEl.addEventListener('click', (e) => {
+    // créer coeur à l'endroit du clic
+    createHeart(e.clientX, e.clientY);
+
+    // afficher message mignon
+    messageEl.textContent = messages[index];
+
+    // passer à l'image suivante après 1.5s
+    setTimeout(() => {
       index++;
-      if (index < images.length) {
-        img.src = images[index];
-        img.style.animation = "none";
-        img.offsetHeight; // reset animation
-        img.style.animation = "fade 1s ease-in-out";
+      if(index < images.length) {
+        imgEl.src = images[index];
+        messageEl.textContent = "";
+      } else {
+        messageEl.textContent = "🎉 J'espère que ça t'a plu 😍";
+        imgEl.style.display = "none";
       }
-    }, 3000);
-
-    // Générateur de coeurs
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (15 + Math.random() * 25) + "px";
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }, 400);
-  </script>
-
-</body>
-</html>
-
+    }, 1500);
+  });
+</script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
       height: 100vh;
       background:
         linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-        url("kenza1.jpg") center/cover no-repeat;
+        url("kenza.jpg") center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -110,17 +110,19 @@
     const declaration =
       "J’ai longtemps réfléchi à comment te dire ça.\n\n" +
       "T’es devenue la personne la plus importante de ma vie.\n" +
-      "Tu me fais sourire sans le vouloir H24,\n" +
+      "Tu me fais sourire sans le vouloir,\n" +
       "et penser à toi me rend juste… heureux.\n\n" +
       "Alors j’ai une question simple :\n\n" +
-      "Est-ce que tu accepterais d’être l’amour de ma vie ? 💖";
+      "Est-ce que tu accepterais d’être l’amour de ma vie ? 💖\n\n" +
+      "Je t’aime ❤️";
 
     let i = 0;
     const textElement = document.getElementById("text");
 
     function typeWriter() {
       if (i < declaration.length) {
-        textElement.innerHTML += declaration.charAt(i) === "\n" ? "<br>" : declaration.charAt(i);
+        textElement.innerHTML +=
+          declaration.charAt(i) === "\n" ? "<br>" : declaration.charAt(i);
         i++;
         setTimeout(typeWriter, 40);
       } else {
@@ -152,4 +154,5 @@
 
 </body>
 </html>
+
 

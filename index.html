@@ -1,122 +1,155 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini-jeu mignon 💖</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    background: #ffe3e3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    text-align: center;
-  }
+  <meta charset="UTF-8">
+  <title>Pour Kenza 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  #game-img {
-    width: 80vw;
-    max-width: 400px;
-    height: 80vw;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(255,105,180,0.5);
-    cursor: pointer;
-    position: relative;
-  }
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url("kenza1.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
 
-  .message {
-    margin-top: 20px;
-    font-size: 1.4rem;
-    color: #ff6b81;
-    min-height: 30px;
-    text-shadow: 1px 1px 3px #fff;
-  }
+    .card {
+      background: rgba(255,255,255,0.93);
+      padding: 30px;
+      border-radius: 25px;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      animation: pop 1s ease;
+    }
 
-  .heart {
-    position: absolute;
-    font-size: 25px;
-    animation: floatUp 1.5s linear forwards;
-    opacity: 0.9;
-    pointer-events: none;
-  }
+    @keyframes pop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
 
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-  }
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 15px;
+    }
 
-</style>
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background: #ddd;
+    }
+
+    #response {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #ff4d6d;
+      min-height: 24px;
+      white-space: pre-line;
+    }
+
+    #poeme {
+      display: none;
+      width: 100%;
+      border-radius: 20px;
+      margin-top: 20px;
+      box-shadow: 0 10px 25px rgba(255, 77, 109, 0.6);
+      animation: fade 1.5s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
 
-<img id="game-img" src="kenza1.jpg" alt="photo">
-<div class="message" id="message"></div>
+  <div class="card">
+    <h1>Kenza 💕</h1>
 
-<script>
-  const images = [
-    "kenza1.jpg",
-    "kenza2.jpg",
-    "kenza3.jpg",
-    "kenza4.jpg",
-    "kenza5.jpg",
-    "kenza6.jpg",
-    "kenza7.jpg",
-    "poeme.jpg" // dernière image
-  ];
+    <p id="text"></p>
 
-  const messages = [
-    "Trop mignon 😍",
-    "Je fonds 🥰",
-    "Haha trop drôle 😂",
-    "Trop coquine 😜",
-    "Tu es géniale 🤩",
-    "Trop stylée 😎",
-    "Mon rayon de soleil 💖",
-    "💌 Mon poème pour toi 💌"
-  ];
+    <div id="buttons" style="display:none;">
+      <button class="yes" onclick="yes()">Oui 💖</button>
+      <button class="no" onclick="no()">Non 🙃</button>
+    </div>
 
-  let index = 0;
+    <div id="response"></div>
+    <img id="poeme" src="poeme.jpg" alt="Poème">
+  </div>
 
-  const imgEl = document.getElementById('game-img');
-  const messageEl = document.getElementById('message');
+  <script>
+    const declaration =
+      "J’ai longtemps réfléchi à comment te dire ça.\n\n" +
+      "T’es devenue quelqu’un de vraiment important pour moi.\n" +
+      "Tu me fais sourire sans le vouloir,\n" +
+      "et penser à toi me rend juste… heureux.\n\n" +
+      "Alors j’ai une question simple :\n\n" +
+      "Est-ce que tu accepterais d’être l’amour de ma vie ? 💖";
 
-  function createHeart(x, y) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.textContent = "💖";
-    heart.style.left = x + 'px';
-    heart.style.top = y + 'px';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1500);
-  }
+    let i = 0;
+    const textElement = document.getElementById("text");
 
-  imgEl.addEventListener('click', (e) => {
-    // créer coeur à l'endroit du clic
-    createHeart(e.clientX, e.clientY);
-
-    // afficher message mignon
-    messageEl.textContent = messages[index];
-
-    // passer à l'image suivante après 1.5s
-    setTimeout(() => {
-      index++;
-      if(index < images.length) {
-        imgEl.src = images[index];
-        messageEl.textContent = "";
+    function typeWriter() {
+      if (i < declaration.length) {
+        textElement.innerHTML += declaration.charAt(i) === "\n" ? "<br>" : declaration.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
       } else {
-        messageEl.textContent = "🎉 J'espère que ça t'a plu 😍";
-        imgEl.style.display = "none";
+        document.getElementById("buttons").style.display = "block";
       }
-    }, 1500);
-  });
-</script>
+    }
+
+    typeWriter();
+
+    function yes() {
+      document.getElementById("response").innerText =
+        "💘 J’en étais sûr.\nEt j’avais envie de te laisser ça…";
+      showPoeme();
+    }
+
+    function no() {
+      document.getElementById("response").innerText =
+        "😐 Hmm… je prends ça comme un « pas encore ».\nAlors lis quand même ça 🥺";
+      showPoeme();
+    }
+
+    function showPoeme() {
+      document.getElementById("buttons").style.display = "none";
+      setTimeout(() => {
+        document.getElementById("poeme").style.display = "block";
+      }, 800);
+    }
+  </script>
 
 </body>
 </html>
+

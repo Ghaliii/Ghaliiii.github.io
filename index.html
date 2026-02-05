@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Pour Kenza 💖</title>
+  <title>Pour toi 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -18,14 +18,14 @@
       font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
-    .card {
-      background: rgba(255,255,255,0.93);
+    .box {
+      background: rgba(255,255,255,0.95);
       padding: 30px;
       border-radius: 25px;
-      max-width: 420px;
+      max-width: 400px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      animation: pop 1s ease;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      animation: pop 0.8s ease;
     }
 
     @keyframes pop {
@@ -38,19 +38,26 @@
       margin-bottom: 15px;
     }
 
-    p {
+    #reason {
       font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 25px;
+      min-height: 80px;
+      margin-bottom: 20px;
+      animation: fade 0.6s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     button {
-      padding: 12px 22px;
+      background: #ff4d6d;
+      color: white;
       border: none;
       border-radius: 20px;
+      padding: 12px 22px;
       font-size: 16px;
       cursor: pointer;
-      margin: 5px;
       transition: transform 0.2s;
     }
 
@@ -58,101 +65,58 @@
       transform: scale(1.1);
     }
 
-    .yes {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    .no {
-      background: #ddd;
-    }
-
-    #response {
-      margin-top: 20px;
-      font-size: 18px;
-      color: #ff4d6d;
-      min-height: 24px;
-      white-space: pre-line;
-    }
-
-    #poeme {
+    img {
       display: none;
       width: 100%;
-      border-radius: 20px;
       margin-top: 20px;
+      border-radius: 20px;
       box-shadow: 0 10px 25px rgba(255, 77, 109, 0.6);
-      animation: fade 1.5s ease;
-    }
-
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      animation: fade 1.2s ease;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Kenza 💕</h1>
+  <div class="box">
+    <h1>Une raison de plus 💕</h1>
 
-    <p id="text"></p>
+    <div id="reason">Clique 😌</div>
 
-    <div id="buttons" style="display:none;">
-      <button class="yes" onclick="yes()">Oui 💖</button>
-      <button class="no" onclick="no()">Non 🙃</button>
-    </div>
+    <button onclick="nextReason()">Encore une 💖</button>
 
-    <div id="response"></div>
     <img id="poeme" src="poeme.jpg" alt="Poème">
   </div>
 
   <script>
-    const declaration =
-      "J’ai longtemps réfléchi à comment te dire ça.\n\n" +
-      "T’es devenue la personne la plus importante de ma vie.\n" +
-      "Tu me fais sourire sans le vouloir,\n" +
-      "et penser à toi me rend juste… heureux.\n\n" +
-      "Alors j’ai une question simple :\n\n" +
-      "Est-ce que tu accepterais d’être l’amour de ma vie ? 💖\n\n" +
-      "Je t’aime ❤️";
+    const reasons = [
+      "Parce que ton sourire me calme instantanément.",
+      "Parce que t’es la personne la plus importante de ma vie.",
+      "Parce que même quand tu dis rien, t’es rassurante.",
+      "Parce que tu rends les moments simples incroyables.",
+      "Parce que je me sens moi-même avec toi.",
+      "Parce que penser à toi me rend heureux.",
+      "Parce que je t’aime. Tout simplement ❤️"
+    ];
 
-    let i = 0;
-    const textElement = document.getElementById("text");
+    let index = 0;
+    const reasonDiv = document.getElementById("reason");
+    const poeme = document.getElementById("poeme");
 
-    function typeWriter() {
-      if (i < declaration.length) {
-        textElement.innerHTML +=
-          declaration.charAt(i) === "\n" ? "<br>" : declaration.charAt(i);
-        i++;
-        setTimeout(typeWriter, 40);
+    function nextReason() {
+      if (index < reasons.length) {
+        reasonDiv.innerText = reasons[index];
+        index++;
       } else {
-        document.getElementById("buttons").style.display = "block";
+        reasonDiv.innerText =
+          "Et il y en aura toujours une de plus…";
+        poeme.style.display = "block";
       }
-    }
-
-    typeWriter();
-
-    function yes() {
-      document.getElementById("response").innerText =
-        "💘 J’en étais sûr.\nEt j’avais envie de te laisser ça…";
-      showPoeme();
-    }
-
-    function no() {
-      document.getElementById("response").innerText =
-        "😐 Hmm… je prends ça comme un « pas encore ».\nAlors lis quand même ça 🥺";
-      showPoeme();
-    }
-
-    function showPoeme() {
-      document.getElementById("buttons").style.display = "none";
-      setTimeout(() => {
-        document.getElementById("poeme").style.display = "block";
-      }, 800);
     }
   </script>
 
 </body>
+</html>
+
 </html>
 
 

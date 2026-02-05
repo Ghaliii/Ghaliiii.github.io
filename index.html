@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Pour toi 💖</title>
+  <title>Pour toi ✨</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -10,105 +10,124 @@
       margin: 0;
       height: 100vh;
       background:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
         url("kenza.jpg") center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
     }
 
-    .box {
-      background: rgba(255,255,255,0.95);
-      padding: 30px;
+    .container {
+      background: rgba(255,255,255,0.92);
+      padding: 25px;
       border-radius: 25px;
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
       box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      animation: pop 0.8s ease;
-    }
-
-    @keyframes pop {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     h1 {
-      color: #ff4d6d;
-      margin-bottom: 15px;
+      color: #ffd166;
+      margin-bottom: 10px;
     }
 
-    #reason {
+    .stars {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .star {
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .star:hover {
+      transform: scale(1.3);
+    }
+
+    #message {
+      font-size: 17px;
+      min-height: 70px;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    #final {
+      display: none;
       font-size: 18px;
-      min-height: 80px;
-      margin-bottom: 20px;
-      animation: fade 0.6s ease;
+      color: #ff4d6d;
+      margin-top: 15px;
+    }
+
+    img {
+      display: none;
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 20px;
+      animation: fade 1.2s ease;
     }
 
     @keyframes fade {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
-    button {
-      background: #ff4d6d;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 12px 22px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    button:hover {
-      transform: scale(1.1);
-    }
-
-    img {
-      display: none;
-      width: 100%;
-      margin-top: 20px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(255, 77, 109, 0.6);
-      animation: fade 1.2s ease;
-    }
   </style>
 </head>
 <body>
 
-  <div class="box">
-    <h1>Une raison de plus 💕</h1>
+  <div class="container">
+    <h1>Un petit ciel pour toi ✨</h1>
 
-    <div id="reason">Clique 😌</div>
+    <p>Clique sur les étoiles</p>
 
-    <button onclick="nextReason()">Encore une 💖</button>
+    <div class="stars" id="stars"></div>
+
+    <div id="message"></div>
+    <div id="final">Et tout ça… c’est toi 💖</div>
 
     <img id="poeme" src="poeme.jpg" alt="Poème">
   </div>
 
   <script>
-    const reasons = [
-      "Parce que ton sourire me calme instantanément.",
-      "Parce que t’es la personne la plus importante de ma vie.",
-      "Parce que même quand tu dis rien, t’es rassurante.",
-      "Parce que tu rends les moments simples incroyables.",
-      "Parce que je me sens moi-même avec toi.",
-      "Parce que penser à toi me rend heureux.",
-      "Parce que je t’aime. Tout simplement ❤️"
+    const texts = [
+      "Tu rends mes journées plus légères.",
+      "Ta présence me rassure.",
+      "Ton sourire vaut tout.",
+      "Avec toi, je me sens bien.",
+      "Tu comptes énormément pour moi.",
+      "Je t’aime ❤️"
     ];
 
     let index = 0;
-    const reasonDiv = document.getElementById("reason");
+    const starsDiv = document.getElementById("stars");
+    const messageDiv = document.getElementById("message");
+    const finalDiv = document.getElementById("final");
     const poeme = document.getElementById("poeme");
 
-    function nextReason() {
-      if (index < reasons.length) {
-        reasonDiv.innerText = reasons[index];
+    // Création des étoiles
+    texts.forEach(() => {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.innerText = "⭐";
+      star.onclick = () => reveal();
+      starsDiv.appendChild(star);
+    });
+
+    function reveal() {
+      if (index < texts.length) {
+        messageDiv.innerText = texts[index];
+        starsDiv.children[index].style.opacity = 0.3;
         index++;
-      } else {
-        reasonDiv.innerText =
-          "Et il y en aura toujours une de plus…";
+      }
+
+      if (index === texts.length) {
+        finalDiv.style.display = "block";
         poeme.style.display = "block";
       }
     }

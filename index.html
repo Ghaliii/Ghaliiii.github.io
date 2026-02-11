@@ -10,134 +10,123 @@
       margin: 0;
       height: 100vh;
       background:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
         url("kenza.jpg") center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow: hidden;
     }
 
     .card {
-      background: rgba(255,255,255,0.93);
-      padding: 30px;
+      background: rgba(255,255,255,0.94);
+      padding: 28px;
       border-radius: 25px;
       max-width: 420px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+      animation: pop 0.8s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     h1 {
       color: #ff4d6d;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
-    #phrase {
-      font-size: 24px;
-      min-height: 70px;
-      margin: 20px 0;
-      color: #ff4d6d;
-      animation: fade 0.6s ease;
-    }
-
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+      white-space: pre-line;
     }
 
     button {
+      margin-top: 20px;
       padding: 12px 22px;
       border: none;
       border-radius: 20px;
       font-size: 16px;
       cursor: pointer;
-      margin: 8px;
-      transition: transform 0.15s ease;
+      background: #ff4d6d;
+      color: white;
+      transition: transform 0.2s;
     }
 
     button:hover {
       transform: scale(1.1);
-    }
-
-    .yes {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    .no {
-      background: #ddd;
-      position: relative;
-    }
-
-    #question {
-      display: none;
-      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h1>Pour toi 💕</h1>
-
-    <div id="phrase">Clique 💫</div>
-
-    <button id="nextBtn" class="yes" onclick="nextPhrase()">Clique ici 💖</button>
-
-    <div id="question">
-      <p style="font-size:18px; margin-top:20px;">
-        Veux-tu être ma Valentine ce samedi ? 💘
-      </p>
-      <button class="yes" onclick="alert('💖 J’étais sûr 😌')">Oui 💖</button>
-      <button id="noBtn" class="no">Non 🙃</button>
-    </div>
+    <h1 id="title">🙃 Petite confession</h1>
+    <p id="content"></p>
+    <button onclick="nextPage()">Suivant 💫</button>
   </div>
 
   <script>
-    const phrases = [
-      "كنموت عليك",
-      "كنهبل عليك",
-      "أنت قلبي",
-      "أعشقك",
-      "أنت شمسي, أنت قمري",
-      "أنت سعادتي",
-      "أحبك"
+    const pages = [
+      // Page 1 : jalousie taquine (modifiée)
+      {
+        title: "🙃 Petite confession",
+        content:
+          "J’espère que tu n’as pas trop conversé avec les collègues masculins…\n" +
+          "je suis jaloux et choqué 😭😂\n\n" +
+          "J’ai mal au cœur de ton excuse de « il se passe rien »\n" +
+          "et « parce qu’ils sont renoi » 😭😂\n\n" +
+          "Imagine ils étaient marocains, et moi dans cette histoire 😠\n\n" +
+          "Mais quand même… voilà pour toi 💖"
+      },
+
+      // Page 2 : poème partie 1
+      {
+        title: "Pour toi 💖 (1/2)",
+        content:
+          "كنبغيك من قلبي وما نقدرش نخبي،\n" +
+          "ضحكتك كتفرّحني وكتداوي قلبي.\n" +
+          "معاك الدنيا كتحلى وكيبان كلشي بخير،\n" +
+          "وجودك حدّاي كيخليني نحس براسي بخير."
+      },
+
+      // Page 3 : poème partie 2
+      {
+        title: "Pour toi 💖 (2/2)",
+        content:
+          "صوتك راحة، وكلامك أمان،\n" +
+          "وفعيونك كنلقى الدنيا بلا خوف ولا أحزان.\n" +
+          "إلى طول الليل ولا تعيّات أيامي،\n" +
+          "غير بفكرتك كيرتاح قلبي وينساني همّامي.\n\n" +
+          "كنبغيك دابا، وغنبغيك ديما… ❤️"
+      }
     ];
 
     let index = 0;
-    const phraseDiv = document.getElementById("phrase");
-    const questionDiv = document.getElementById("question");
-    const nextBtn = document.getElementById("nextBtn");
-    const noBtn = document.getElementById("noBtn");
+    const titleEl = document.getElementById("title");
+    const contentEl = document.getElementById("content");
 
-    function nextPhrase() {
-      if (index < phrases.length) {
-        phraseDiv.innerText = phrases[index];
-        phraseDiv.style.animation = "none";
-        phraseDiv.offsetHeight; // reset animation
-        phraseDiv.style.animation = "fade 0.6s ease";
+    function render() {
+      titleEl.innerText = pages[index].title;
+      contentEl.innerText = pages[index].content;
+    }
+
+    function nextPage() {
+      if (index < pages.length - 1) {
         index++;
+        render();
       } else {
-        phraseDiv.innerText = "💖";
-        nextBtn.style.display = "none";
-        questionDiv.style.display = "block";
+        titleEl.innerText = "💖 Fin";
+        contentEl.innerText = "C’est tout pour aujourd’hui… mais pas pour mes sentiments 😌";
       }
     }
 
-    // Le bouton Non qui se sauve
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 150 - 75;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    noBtn.addEventListener("click", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 150 - 75;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    render();
   </script>
 
 </body>
 </html>
+

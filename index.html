@@ -2,129 +2,105 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Pour toi 💖</title>
+  <title>Notre mini séjour 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background:
-        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-        url("kenza.jpg") center/cover no-repeat;
+      background: #000;
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
     }
 
-    .card {
-      background: rgba(255,255,255,0.94);
-      padding: 28px;
-      border-radius: 25px;
+    .container {
+      position: relative;
+      width: 90vw;
       max-width: 420px;
-      text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-      animation: pop 0.8s ease;
+      height: 90vw;
+      max-height: 420px;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(255, 77, 109, 0.6);
+      animation: fade 1s ease-in-out;
+      background: #000;
     }
 
-    @keyframes pop {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      animation: fade 1s ease-in-out;
     }
 
-    h1 {
-      color: #ff4d6d;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 17px;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #ff4d6d;
+    .final-text {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
       color: white;
-      transition: transform 0.2s;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      animation: fade 1.5s ease;
     }
 
-    button:hover {
-      transform: scale(1.1);
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1 id="title">🙃 Petite confession</h1>
-    <p id="content"></p>
-    <button onclick="nextPage()">Suivant 💫</button>
+  <div class="container">
+    <img id="slideshow" src="kenza8.jpg" alt="photo">
+    <div id="finalText" class="final-text">
+      Un petit résumé de notre mini séjour incroyable 💖<br><br>
+      Pour toi, ma future petite femme 😌<br><br>
+      En espérant que ce petit truc te rende heureuse  
+      et un peu moins fatiguée 🥹✨<br><br>
+      <strong>Je t’aime plus que tout ❤️</strong>
+    </div>
   </div>
 
   <script>
-    const pages = [
-      // Page 1 : jalousie taquine (modifiée)
-      {
-        title: "🙃 Petite confession",
-        content:
-          "J’espère que tu n’as pas trop conversé avec les collègues masculins…\n" +
-          "je suis jaloux et choqué 😭😂\n\n" +
-          "J’ai mal au cœur de ton excuse de « il se passe rien »\n" +
-          "et « parce qu’ils sont renoi » 😭😂\n\n" +
-          "Imagine ils étaient marocains, et moi dans cette histoire 😠\n\n" +
-          "Mais quand même… voilà pour toi 💖"
-      },
-
-      // Page 2 : poème partie 1
-      {
-        title: "Pour toi 💖 (1/2)",
-        content:
-          "كنبغيك من قلبي وما نقدرش نخبي،\n" +
-          "ضحكتك كتفرّحني وكتداوي قلبي.\n" +
-          "معاك الدنيا كتحلى وكيبان كلشي بخير،\n" +
-          "وجودك حدّاي كيخليني نحس براسي بخير."
-      },
-
-      // Page 3 : poème partie 2
-      {
-        title: "Pour toi 💖 (2/2)",
-        content:
-          "صوتك راحة، وكلامك أمان،\n" +
-          "وفعيونك كنلقى الدنيا بلا خوف ولا أحزان.\n" +
-          "إلى طول الليل ولا تعيّات أيامي،\n" +
-          "غير بفكرتك كيرتاح قلبي وينساني همّامي.\n\n" +
-          "كنبغيك دابا، وغنبغيك ديما… ❤️"
-      }
+    const images = [
+      "kenza8.jpg",
+      "kenza9.jpg",
+      "kenza10.jpg",
+      "kenza11.jpg",
+      "kenza12.jpg",
+      "kenza13.jpg",
+      "kenza14.jpg",
+      "kenza15.jpg",
+      "kenza16.jpg",
+      "kenza17.jpg",
+      "kenza18.jpg",
+      "kenza19.jpg"
     ];
 
     let index = 0;
-    const titleEl = document.getElementById("title");
-    const contentEl = document.getElementById("content");
+    const img = document.getElementById("slideshow");
+    const finalText = document.getElementById("finalText");
 
-    function render() {
-      titleEl.innerText = pages[index].title;
-      contentEl.innerText = pages[index].content;
-    }
+    const interval = setInterval(() => {
+      index++;
 
-    function nextPage() {
-      if (index < pages.length - 1) {
-        index++;
-        render();
+      if (index < images.length) {
+        img.src = images[index];
       } else {
-        titleEl.innerText = "💖 Fin";
-        contentEl.innerText = "C’est tout pour aujourd’hui… je t'aime 😌";
+        clearInterval(interval);
+        finalText.style.display = "flex";
       }
-    }
-
-    render();
+    }, 2500);
   </script>
 
 </body>

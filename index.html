@@ -2,14 +2,14 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Notre mini séjour 💖</title>
+  <title>Pour toi 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: #000;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,8 +26,6 @@
       border-radius: 25px;
       overflow: hidden;
       box-shadow: 0 15px 40px rgba(255, 77, 109, 0.6);
-      animation: fade 1s ease-in-out;
-      background: #000;
     }
 
     img {
@@ -37,19 +35,19 @@
       animation: fade 1s ease-in-out;
     }
 
-    .final-text {
+    .text {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.65);
+      background: rgba(0, 0, 0, 0.55);
       color: white;
-      display: none;
-      align-items: center;
+      display: flex;
       justify-content: center;
+      align-items: center;
       text-align: center;
       padding: 20px;
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1.6;
-      animation: fade 1.5s ease;
+      animation: fade 1.2s ease;
     }
 
     @keyframes fade {
@@ -61,14 +59,8 @@
 <body>
 
   <div class="container">
-    <img id="slideshow" src="kenza8.jpg" alt="photo">
-    <div id="finalText" class="final-text">
-      Un petit résumé de notre mini séjour incroyable 💖<br><br>
-      Pour toi, ma future petite femme 😌<br><br>
-      En espérant que ce petit truc te rende heureuse  
-      et un peu moins fatiguée 🥹✨<br><br>
-      <strong>Je t’aime plus que tout ❤️</strong>
-    </div>
+    <img id="slideshow" src="kenza8.jpg">
+    <div id="text" class="text"></div>
   </div>
 
   <script>
@@ -87,22 +79,41 @@
       "kenza19.jpg"
     ];
 
+    const poem = [
+      "كنبغيك من قلبي وما نقدرش نخبي",
+      "ضحكتك كتداوي جرحي وقلبي",
+      "معاك الدنيا كتحلى فعيوني",
+      "وغيابك كيخلّي لياليّ تطولي",
+      "صوتك راحة لقلبي العيان",
+      "وكلامك أمان وسط هاد الزمان",
+      "فعيونك كنلقى السلام",
+      "وكننسى الهمّ والأحزان",
+      "معاك كنضحك بلا سبب",
+      "ومعاك كنحس راسي محظوظ بزاف",
+      "وجودك نعمة من ربي",
+      "وبقربك كنلقى قلبي"
+    ];
+
     let index = 0;
     const img = document.getElementById("slideshow");
-    const finalText = document.getElementById("finalText");
+    const text = document.getElementById("text");
+
+    text.innerText = poem[0];
 
     const interval = setInterval(() => {
       index++;
 
       if (index < images.length) {
         img.src = images[index];
+        text.innerText = poem[index];
       } else {
         clearInterval(interval);
-        finalText.style.display = "flex";
+        text.innerHTML = "رسالة صغيرة ليك 💖<br><br>كنبغيك أكثر من أي حاجة ❤️<br>وبغيت نقولك شدّي فـ خدمتك، وعافية عليك فهاد العشية 😌✨";
       }
-    }, 2500);
+    }, 3000);
   </script>
 
 </body>
 </html>
+
 
